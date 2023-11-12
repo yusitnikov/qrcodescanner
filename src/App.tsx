@@ -44,7 +44,7 @@ export const App = () => {
                 ? data
                 : Array(count).fill(undefined);
             newData[index] = dataStr;
-            setData(newData);
+            setData([...newData]);
 
             if (newData.every((s) => s !== undefined)) {
                 setScanning(false);
