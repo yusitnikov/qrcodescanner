@@ -1,11 +1,11 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 
 export const useStream = () => {
     const [stream, setStream] = useState<MediaStream | null>(null);
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        navigator.mediaDevices
+    const streamPromise = useMemo(
+        () => navigator.mediaDevices
             .getUserMedia({
                 video: {
                     width: {ideal: 4000},
@@ -13,18 +13,30 @@ export const useStream = () => {
                 },
                 audio: false,
             })
-            .then(setStream, setError)
-    }, []);
+            .then(
+                (stream) => {
+                    setStream(stream);
+                    return stream;
+                },
+                (error) => {
+                    setError(error);
+                    return null;
+                },
+            ),
+        []
+    );
 
     useEffect(() => {
         return () => {
-            if (stream) {
-                for (const track of stream.getTracks()) {
-                    track.stop();
+            streamPromise.then((stream) => {
+                if (stream) {
+                    for (const track of stream.getTracks()) {
+                        track.stop();
+                    }
                 }
-            }
+            });
         };
-    }, [stream]);
+    }, [streamPromise]);
 
     return {stream, error};
 };
