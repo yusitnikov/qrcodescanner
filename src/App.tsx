@@ -73,7 +73,7 @@ export const App = () => {
                 />
 
                 <Button onClick={() => navigator.clipboard.writeText(dataStr)}>
-                    Copy text
+                    העתק
                 </Button>
             </>}
 
@@ -108,11 +108,11 @@ export const App = () => {
                 setData([]);
                 setScanning(true);
             }}>
-                Start scanning
+                לסרוק
             </Button>}
 
             {scanning && <Button onClick={() => setScanning(false)}>
-                Stop
+                חזרה
             </Button>}
         </div>
     </div>;

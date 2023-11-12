@@ -38,8 +38,9 @@ export const Scanner = ({onData}: ScannerProps) => {
     }), []);
 
     return error
-        ? <div style={{position: "absolute", inset: 0}}>
-            Failed to initialize the camera :(
+        ? <div style={{position: "absolute", inset: 0, top: "25vh"}}>
+            <div>אתחול מצלמה נכשל</div>
+            <div style={{marginTop: 10}}>בדקו את ההרשאות</div>
         </div>
         : <video
             ref={setRef}
